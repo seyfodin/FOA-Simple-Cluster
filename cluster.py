@@ -18,7 +18,7 @@ class Cluster:
         for i in range(0, self._num_of_cluster):
             cr=[random.uniform(-15, 15),random.uniform(-15, 15)]
             for j in range(0 ,math.floor(self._num_of_data/self._num_of_cluster)):
-                self._datas.append([random.uniform(cr[0]-2, cr[0]+2),random.uniform(cr[1]-2, cr[1]+2)])
+                self._datas.append([random.uniform(cr[0]-1, cr[0]+1),random.uniform(cr[1]-1, cr[1]+1)])
 
     def getDim(self):
         return len(self._datas)
@@ -46,9 +46,6 @@ class Cluster:
         s_i=self.__s_i(cluster_array,cluster_count)
         return sum(s_i) / len(s_i)
 
-
-
-
     def __s_i(self,cluster_array,cluster_count):
         a_i=self.__a_i(cluster_array,cluster_count)
         b_i=self.__b_i(cluster_array,cluster_count)
@@ -61,7 +58,6 @@ class Cluster:
                 s_i.append((b_i[i]-a_i[i])/max(a_i[i],b_i[i]))
 
         return s_i
-
 
     def __a_i(self,cluster_array,cluster_count):
         a_i=[]
