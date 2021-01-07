@@ -16,9 +16,9 @@ class Cluster:
         self._num_of_cluster=numOfCluster
         self._datas = []
         for i in range(0, self._num_of_cluster):
-            cr=[random.uniform(-15, 15),random.uniform(-15, 15)]
+            cr=[np.random.uniform(-15, 15),np.random.uniform(-15, 15)]
             for j in range(0 ,math.floor(self._num_of_data/self._num_of_cluster)):
-                self._datas.append([random.uniform(cr[0]-1, cr[0]+1),random.uniform(cr[1]-1, cr[1]+1)])
+                self._datas.append([np.random.uniform(cr[0]-1, cr[0]+1),np.random.uniform(cr[1]-1, cr[1]+1)])
 
     def getDim(self):
         return len(self._datas)
@@ -42,7 +42,7 @@ class Cluster:
 
         cluster_count=[ 0 for i in range(0,self._num_of_cluster+1)]
         for i in range(0,len(cluster_array)):
-            cluster_count[cluster_array[i]] +=1
+            cluster_count[int(cluster_array[i])] +=1
         s_i=self.__s_i(cluster_array,cluster_count)
         return sum(s_i) / len(s_i)
 
@@ -52,9 +52,9 @@ class Cluster:
         s_i=[]
 
         for i in range(0,len(self._datas)):
-            if cluster_count[cluster_array[i]]==1:
+            if cluster_count[int(cluster_array[i])]==1:
                 s_i.append(0)
-            elif cluster_count[cluster_array[i]] > 1:
+            elif cluster_count[int(cluster_array[i])] > 1:
                 s_i.append((b_i[i]-a_i[i])/max(a_i[i],b_i[i]))
 
         return s_i
@@ -69,10 +69,10 @@ class Cluster:
                     continue
                 if cn==cluster_array[j]:
                     sigma += self._distance(self._datas[i],self._datas[j])
-            if cluster_count[cn]==1:
+            if cluster_count[int(cn)]==1:
                 a_i.append(0)
             else:
-                a_i.append((1/(cluster_count[cn]-1))*sigma)
+                a_i.append((1/(cluster_count[int(cn)]-1))*sigma)
         return a_i
 
     def __b_i(self,cluster_array,cluster_count):
@@ -133,4 +133,3 @@ class Cluster:
 
     def animate(self,maxtime,update):
         self.animatePlot2(maxtime,update)
-

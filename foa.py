@@ -26,7 +26,7 @@ class FOA:
         for i in range(0, self._numSeeds):
             self._trees.append([])
             for j in range(0, self._dim):
-                self._trees[i].append(random.uniform(self._fun.getInf(), self._fun.getSup()))
+                self._trees[i].append(np.random.uniform(self._fun.getInf(), self._fun.getSup()))
             self._trees[i].append(self._fun.fitness(np.array(self._trees[i][0:self._dim].copy())))
             self._trees[i].append(0)
 
@@ -34,10 +34,10 @@ class FOA:
         new_trees = []
         for tree in self._trees:
             if tree[self._dim + 1] == 0:
-                moveindex = [random.randrange(0, self._dim) for i in range(0, self._localSeeding)]
+                moveindex = [np.random.randint(0, self._dim) for i in range(0, self._localSeeding)]
                 for mi in moveindex:
                     trans = tree.copy()
-                    trans[mi] = trans[mi] + random.uniform(-1*self._localMotion, self._localMotion)
+                    trans[mi] = trans[mi] + np.random.uniform(-1*self._localMotion, self._localMotion)
                     trans[self._dim] = self._fun.fitness(np.array(trans[0:self._dim].copy()))
                     trans[self._dim + 1] = 0
                     new_trees.append(trans)
@@ -64,15 +64,15 @@ class FOA:
     def globalSeeding(self):
         selected_tree = []
         while len(selected_tree) <= (len(self._candidate) * self._transferRate) / 100:
-            selected_tree.append(self._candidate.pop(random.randrange(0, len(self._candidate))))
+            selected_tree.append(self._candidate.pop(np.random.randint(0, len(self._candidate))))
         for tree in selected_tree:
             moveindex =[]
             while len(moveindex) < self._globalSeeding:
-                r=random.randrange(0, self._dim)
+                r=np.random.randint(0, self._dim)
                 if r not in moveindex: moveindex.append(r)
             trans = tree.copy()
             for mi in moveindex:
-                trans[mi] = random.uniform(self._fun.getInf(), self._fun.getSup())
+                trans[mi] = np.random.uniform(self._fun.getInf(), self._fun.getSup())
             trans[self._dim] = self._fun.fitness(np.array(trans[0:self._dim].copy()))
             trans[self._dim + 1] = 0
             self._trees.append(trans)
@@ -97,7 +97,7 @@ class FOA:
             print('some problem !!!!!!')
 
     def run(self):
-        bestIndex = random.randint(0, len(self._trees) - 1)
+        bestIndex = np.random.randint(0, len(self._trees) - 1)
         self._best = self._trees[bestIndex]
 
 
